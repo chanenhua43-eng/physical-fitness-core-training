@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>體適能核心與基礎動作自主訓練檢核表</title>
+  <title>體適能核心與基礎動作自主訓練檢核表 - 國立嘉義大學</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- 引入 html2canvas 支援將獎狀下載為 PNG 圖片 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
     body { font-family: 'Noto Sans TC', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -15,19 +17,23 @@
       cursor: pointer;
       accent-color: #059669;
     }
+    /* 電子獎狀框線樣式 */
+    .cert-border-outer { border: 8px solid #059669; padding: 6px; background: #fff; }
+    .cert-border-inner { border: 2px solid #10b981; padding: 20px; text-align: center; background: #fafdfb; }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen pb-16">
 
   <!-- Header 標題列 -->
-  <header class="bg-emerald-700 text-white shadow-lg sticky top-0 z-50">
+  <header class="bg-emerald-700 text-white shadow-lg sticky top-0 z-40">
     <div class="max-w-3xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
       <div class="text-center sm:text-left">
+        <div class="text-xs sm:text-sm font-bold text-emerald-200 tracking-widest mb-0.5">國立嘉義大學 體育與健康休閒學系</div>
         <h1 class="text-xl sm:text-2xl font-black tracking-wide flex items-center justify-center sm:justify-start gap-2">
           <i class="fa-solid fa-dumbbell text-yellow-300"></i>
           核心與體適能動作自主訓練檢核表
         </h1>
-        <p class="text-emerald-100 text-xs sm:text-sm mt-1">15 項精選動作 • 三組逐項打勾 • 動作自主檢核 • 歷程同步</p>
+        <p class="text-emerald-100 text-xs sm:text-sm mt-1">15 項精選動作 • 三組逐項打勾 • 動作自主檢核 • 即時電子獎狀</p>
       </div>
     </div>
   </header>
@@ -70,14 +76,13 @@
     <!-- 動作檢核表 -->
     <form id="workoutForm" class="space-y-6">
 
-      <!-- (1) 穩定性項目 -->
+      <!-- (1) 靜態穩定性 -->
       <section class="bg-white rounded-xl shadow-sm p-4 sm:p-5 border border-slate-200">
         <h2 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2 border-b pb-2">
           <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
           (1) 靜態穩定性訓練 (3 項)
         </h2>
         <div class="space-y-3">
-          <!-- 棒式 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
             <div>
               <p class="font-bold text-sm text-slate-800">1. 棒式 (Plank)</p>
@@ -89,7 +94,6 @@
               <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
             </div>
           </div>
-          <!-- 側棒式 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
             <div>
               <p class="font-bold text-sm text-slate-800">2. 側棒式 (Side Plank)</p>
@@ -101,7 +105,6 @@
               <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
             </div>
           </div>
-          <!-- 鳥狗式 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
             <div>
               <p class="font-bold text-sm text-slate-800">3. 超人 / 鳥狗式 (Bird-Dog)</p>
@@ -116,239 +119,118 @@
         </div>
       </section>
 
-      <!-- (2) 動態性項目 -->
+      <!-- (2) 動態核心 -->
       <section class="bg-white rounded-xl shadow-sm p-4 sm:p-5 border border-slate-200">
         <h2 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2 border-b pb-2">
           <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
           (2) 動態核心訓練 (9 項)
         </h2>
         <div class="space-y-3">
-          <!-- 摸膝蓋 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-            <div>
-              <p class="font-bold text-sm text-slate-800">4. 摸膝蓋 (Knee Touches)</p>
-              <p class="text-xs text-slate-500">每次 20 下 | 仰臥捲腹，雙手順貼大腿延伸摸膝</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-            </div>
+            <div><p class="font-bold text-sm text-slate-800">4. 摸膝蓋 (Knee Touches)</p><p class="text-xs text-slate-500">每次 20 下 | 仰臥捲腹，雙手順貼大腿延伸摸膝</p></div>
+            <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
           </div>
-          <!-- 摸腳跟 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-            <div>
-              <p class="font-bold text-sm text-slate-800">5. 摸腳跟 (Heel Touches)</p>
-              <p class="text-xs text-slate-500">每次 20 下 | 軀幹微微抬起，左右側屈觸摸腳跟</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-            </div>
+            <div><p class="font-bold text-sm text-slate-800">5. 摸腳跟 (Heel Touches)</p><p class="text-xs text-slate-500">每次 20 下 | 軀幹微微抬起，左右側屈觸摸腳跟</p></div>
+            <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
           </div>
-          <!-- 對側摸腳 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-            <div>
-              <p class="font-bold text-sm text-slate-800">6. 對側摸腳 (Cross Toe Touches)</p>
-              <p class="text-xs text-slate-500">每次 20 下 | 腹斜肌轉體發力，右手摸左腳/左手摸右腳</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-            </div>
+            <div><p class="font-bold text-sm text-slate-800">6. 對側摸腳 (Cross Toe Touches)</p><p class="text-xs text-slate-500">每次 20 下 | 腹斜肌轉體發力，右手摸左腳/左手摸右腳</p></div>
+            <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
           </div>
-          <!-- 鐘擺 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-            <div>
-              <p class="font-bold text-sm text-slate-800">7. 鐘擺 (Pendulum / Windshield Wipers)</p>
-              <p class="text-xs text-slate-500">每次 20 下 | 平躺雙腿抬高，左右擺動控制離心力</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-            </div>
+            <div><p class="font-bold text-sm text-slate-800">7. 鐘擺 (Pendulum)</p><p class="text-xs text-slate-500">每次 20 下 | 平躺雙腿抬高，左右擺動控制離心力</p></div>
+            <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
           </div>
-          <!-- 死蟲式 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-            <div>
-              <p class="font-bold text-sm text-slate-800">8. 死蟲式 (Deadbug)</p>
-              <p class="text-xs text-slate-500">每次 10 下 * 2 | 下背平貼地面，對側手腳延伸下放</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-            </div>
+            <div><p class="font-bold text-sm text-slate-800">8. 死蟲式 (Deadbug)</p><p class="text-xs text-slate-500">每次 10 下 * 2 | 下背平貼地面，對側手腳延伸下放</p></div>
+            <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
           </div>
-          <!-- 橋式 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-            <div>
-              <p class="font-bold text-sm text-slate-800">9. 橋式 (Glute Bridge)</p>
-              <p class="text-xs text-slate-500">每次 20 下 | 腳跟推地，臀大肌收縮帶動骨盆頂起</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-            </div>
+            <div><p class="font-bold text-sm text-slate-800">9. 橋式 (Glute Bridge)</p><p class="text-xs text-slate-500">每次 20 下 | 腳跟推地，臀大肌收縮帶動骨盆頂起</p></div>
+            <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
           </div>
-          <!-- 腳踏車 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-            <div>
-              <p class="font-bold text-sm text-slate-800">10. 腳踏車捲腹 (Bicycle Crunches)</p>
-              <p class="text-xs text-slate-500">每次 20 下 | 對側肘與膝靠攏，交替踩踏轉體</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-            </div>
+            <div><p class="font-bold text-sm text-slate-800">10. 腳踏車捲腹 (Bicycle Crunches)</p><p class="text-xs text-slate-500">每次 20 下 | 對側肘與膝靠攏，交替踩踏轉體</p></div>
+            <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
           </div>
-          <!-- 俄羅斯轉體 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-            <div>
-              <p class="font-bold text-sm text-slate-800">11. 俄羅斯轉體 (Russian Twists)</p>
-              <p class="text-xs text-slate-500">每次 20 下 | V字坐姿，胸椎帶動軀幹左右旋轉</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-            </div>
+            <div><p class="font-bold text-sm text-slate-800">11. 俄羅斯轉體 (Russian Twists)</p><p class="text-xs text-slate-500">每次 20 下 | V字坐姿，胸椎帶動軀幹左右旋轉</p></div>
+            <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
           </div>
-          <!-- 向上抬腿 -->
           <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-            <div>
-              <p class="font-bold text-sm text-slate-800">12. 向上抬腿 (Leg Raises)</p>
-              <p class="text-xs text-slate-500">每次 20 下 | 下腹發力抬腿，離心緩慢控制下放</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-              <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-            </div>
+            <div><p class="font-bold text-sm text-slate-800">12. 向上抬腿 (Leg Raises)</p><p class="text-xs text-slate-500">每次 20 下 | 下腹發力抬腿，離心緩慢控制下放</p></div>
+            <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
           </div>
         </div>
       </section>
 
       <!-- (3) 登山式 -->
       <section class="bg-white rounded-xl shadow-sm p-4 sm:p-5 border border-slate-200">
-        <h2 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2 border-b pb-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
-          (3) 高強度心肺核心
-        </h2>
+        <h2 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2 border-b pb-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span> (3) 高強度心肺核心</h2>
         <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-          <div>
-            <p class="font-bold text-sm text-slate-800">13. 登山式 (Mountain Climbers)</p>
-            <p class="text-xs text-slate-500">每次 40 下 | 俯臥撐姿勢，高頻交替提膝交替衝刺</p>
-          </div>
-          <div class="flex items-center gap-3">
-            <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-            <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-            <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-          </div>
+          <div><p class="font-bold text-sm text-slate-800">13. 登山式 (Mountain Climbers)</p><p class="text-xs text-slate-500">每次 40 下 | 俯臥撐姿勢，高頻提膝衝刺</p></div>
+          <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
         </div>
       </section>
 
-      <!-- (4) YWIT 上背 -->
+      <!-- (4) YWIT -->
       <section class="bg-white rounded-xl shadow-sm p-4 sm:p-5 border border-slate-200">
-        <h2 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2 border-b pb-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-          (4) 上背與肩胛穩定
-        </h2>
+        <h2 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2 border-b pb-2"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> (4) 上背與肩胛穩定</h2>
         <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-          <div>
-            <p class="font-bold text-sm text-slate-800">14. YWIT 伸展 (YWIT Raises)</p>
-            <p class="text-xs text-slate-500">每次 20 下 | 俯臥呈 Y、W、I、T 字形抬臂，喚醒後背肌群</p>
-          </div>
-          <div class="flex items-center gap-3">
-            <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-            <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-            <label class="flex items-center gap-1 text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-          </div>
+          <div><p class="font-bold text-sm text-slate-800">14. YWIT 伸展 (YWIT Raises)</p><p class="text-xs text-slate-500">每次 20 下 | 俯臥呈 Y、W、I、T 字形抬臂</p></div>
+          <div class="flex items-center gap-3"><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
         </div>
       </section>
 
       <!-- (5) 深蹲 (含動作檢核) -->
       <section class="bg-white rounded-xl shadow-sm p-4 sm:p-5 border border-slate-200 border-l-4 border-l-purple-600">
-        <h2 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2 border-b pb-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
-          (5) 下肢基礎：深蹲 (Air Squat) + 動作自我檢核
-        </h2>
-        
-        <div class="p-3 bg-purple-50/50 rounded-lg border border-purple-200 mb-4 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-          <div>
-            <p class="font-bold text-sm text-purple-900">15. 徒手深蹲 (Squats)</p>
-            <p class="text-xs text-purple-700">每次 20 下 | 髖關節先後移，膝蓋與腳尖方向一致</p>
-          </div>
-          <div class="flex items-center gap-3">
-            <label class="flex items-center gap-1 text-xs font-semibold text-purple-900"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label>
-            <label class="flex items-center gap-1 text-xs font-semibold text-purple-900"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label>
-            <label class="flex items-center gap-1 text-xs font-semibold text-purple-900"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label>
-          </div>
+        <h2 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2 border-b pb-2"><span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span> (5) 下肢基礎：深蹲 + 動作品質自我檢核</h2>
+        <div class="p-3 bg-purple-50/50 rounded-lg border border-purple-200 mb-3 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+          <div><p class="font-bold text-sm text-purple-900">15. 徒手深蹲 (Squats)</p><p class="text-xs text-purple-700">每次 20 下 | 髖關節先後移，膝蓋與腳尖方向一致</p></div>
+          <div class="flex items-center gap-3"><label class="text-xs font-semibold text-purple-900"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組1</label><label class="text-xs font-semibold text-purple-900"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組2</label><label class="text-xs font-semibold text-purple-900"><input type="checkbox" class="checkbox-custom set-ck" onchange="updateProgress()">組3</label></div>
         </div>
-
-        <!-- 深蹲動作檢核表 -->
-        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
-          <p class="text-xs font-bold text-slate-800 mb-2 flex items-center gap-1">
-            <i class="fa-solid fa-list-check text-purple-600"></i>
-            【深蹲動作品質自我檢核清單】（完成請勾選）：
-          </p>
-          <label class="flex items-start gap-2 text-xs text-slate-700 cursor-pointer">
-            <input type="checkbox" class="mt-0.5 checkbox-custom squat-check">
-            <span><strong>腳步站姿</strong>：雙腳與肩同寬或略寬，腳尖自然微外展 15-30 度。</span>
-          </label>
-          <label class="flex items-start gap-2 text-xs text-slate-700 cursor-pointer">
-            <input type="checkbox" class="mt-0.5 checkbox-custom squat-check">
-            <span><strong>下蹲軌跡</strong>：髖關節主動啟動後移，膝蓋運動方向始終與腳尖維持平行（無內絞/內扣）。</span>
-          </label>
-          <label class="flex items-start gap-2 text-xs text-slate-700 cursor-pointer">
-            <input type="checkbox" class="mt-0.5 checkbox-custom squat-check">
-            <span><strong>深度與重心</strong>：下蹲至大腿近乎平行地面，全腳掌均勻穩定受力（腳跟不離地）。</span>
-          </label>
-          <label class="flex items-start gap-2 text-xs text-slate-700 cursor-pointer">
-            <input type="checkbox" class="mt-0.5 checkbox-custom squat-check">
-            <span><strong>軀幹姿態</strong>：核心緊繃保持腹壓，脊椎（腰椎與胸椎）維持中立自然不塌腰駝背。</span>
-          </label>
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2 text-xs">
+          <p class="font-bold text-slate-800 mb-1 flex items-center gap-1"><i class="fa-solid fa-list-check text-purple-600"></i> 【深蹲動作品質自我檢核清單】：</p>
+          <label class="flex items-start gap-2 text-slate-700 cursor-pointer"><input type="checkbox" class="mt-0.5 checkbox-custom squat-check"><span><strong>腳步站姿</strong>：雙腳與肩同寬或略寬，腳尖微外展 15-30 度。</span></label>
+          <label class="flex items-start gap-2 text-slate-700 cursor-pointer"><input type="checkbox" class="mt-0.5 checkbox-custom squat-check"><span><strong>下蹲軌跡</strong>：髖關節主動後移，膝蓋運動方向始終與腳尖平行（不內扣）。</span></label>
+          <label class="flex items-start gap-2 text-slate-700 cursor-pointer"><input type="checkbox" class="mt-0.5 checkbox-custom squat-check"><span><strong>深度與重心</strong>：下蹲至大腿近乎平行地面，全腳掌受力（腳跟不離地）。</span></label>
+          <label class="flex items-start gap-2 text-slate-700 cursor-pointer"><input type="checkbox" class="mt-0.5 checkbox-custom squat-check"><span><strong>軀幹姿態</strong>：核心緊繃保持腹壓，脊椎維持中立不塌腰駝背。</span></label>
         </div>
       </section>
 
-      <!-- 額外填寫欄位：RPE 與心得 -->
+      <!-- RPE、反思與佐證照片 -->
       <section class="bg-white rounded-xl shadow-sm p-4 sm:p-5 border border-slate-200 space-y-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">主觀運動強度感受 (RPE 6-20 量表)</label>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">主觀運動強度感受 (RPE 量表)</label>
             <select id="rpeSelect" class="w-full px-3 py-2 border rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
               <option value="RPE 11 (輕鬆)">RPE 11 - 輕鬆 (呼吸平穩、能對話)</option>
               <option value="RPE 13 (有點辛苦)" selected>RPE 13 - 有點辛苦 (呼吸稍快、稍流汗)</option>
-              <option value="RPE 15 (辛苦)">RPE 15 - 辛苦 (喘氣流汗、肌肉有酸脹感)</option>
+              <option value="RPE 15 (辛苦)">RPE 15 - 辛苦 (喘氣流汗、肌肉酸脹)</option>
               <option value="RPE 17 (非常辛苦)">RPE 17 - 非常辛苦 (非常喘、接近疲勞邊緣)</option>
-              <option value="RPE 19 (極度辛苦)">RPE 19 - 極度辛苦 (極度疲勞)</option>
             </select>
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">訓練心得與動作感受反思</label>
-            <input type="text" id="note" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="例如：深蹲時下蹲深度良好，但第三組死蟲式下背稍微有點離地。">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">訓練心得與反思</label>
+            <input type="text" id="note" class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="例如：深蹲發力順暢，第三組死蟲式下背稍微有點離地。">
           </div>
         </div>
 
         <!-- 佐證照片上傳 -->
         <div class="p-3 bg-slate-50 border border-dashed border-slate-300 rounded-lg">
           <label class="block text-xs font-bold text-slate-700 mb-2">
-            <i class="fa-solid fa-camera text-emerald-600 mr-1"></i> 上傳訓練現場佐證照片 / 姿勢檢核截圖：
+            <i class="fa-solid fa-camera text-emerald-600 mr-1"></i> 上傳訓練現場佐證照片 / 檢核截圖（照片將帶入電子獎狀）：
           </label>
-          <input type="file" id="photoInput" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer">
+          <input type="file" id="photoInput" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 cursor-pointer">
           <div id="photoPreviewContainer" class="mt-3 hidden">
-            <p class="text-[11px] text-slate-500 mb-1">照片預覽（系統已自動壓縮）：</p>
+            <p class="text-[11px] text-slate-500 mb-1">照片預覽：</p>
             <img id="photoPreview" class="h-28 rounded border shadow-sm object-cover">
           </div>
         </div>
 
         <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg shadow transition flex items-center justify-center gap-2 text-sm">
-          <i class="fa-solid fa-cloud-arrow-up"></i> 提交今日 15 項訓練紀錄並同步雲端
+          <i class="fa-solid fa-cloud-arrow-up"></i> 提交 15 項訓練紀錄並生成嘉大專屬電子獎狀
         </button>
       </section>
 
@@ -362,7 +244,7 @@
           個人歷史訓練歷程與成就
         </h2>
         <button id="queryBtn" class="text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 px-3 py-1.5 rounded-lg transition">
-          <i class="fa-solid fa-rotate mr-1"></i>載入 / 重新整理歷程
+          <i class="fa-solid fa-rotate mr-1"></i>載入歷程
         </button>
       </div>
 
@@ -395,17 +277,61 @@
 
   </main>
 
+  <!-- 電子獎狀 Modal 彈出視窗 -->
+  <div id="certModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-3 hidden">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-4 overflow-y-auto max-h-[90vh]">
+      <div class="text-right mb-1">
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 text-lg px-2"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- 可截圖/下載的獎狀區域 -->
+      <div id="certificateArea" class="cert-border-outer rounded-xl shadow-inner">
+        <div class="cert-border-inner rounded-lg">
+          <div class="text-xs sm:text-sm font-black text-emerald-800 tracking-wider mb-1">國立嘉義大學 體育與健康休閒學系</div>
+          <div class="text-amber-500 text-2xl sm:text-3xl mb-1"><i class="fa-solid fa-award"></i></div>
+          <h2 class="text-xl sm:text-2xl font-black text-emerald-900 tracking-wide">體適能核心訓練完成證明</h2>
+          <p class="text-[9px] sm:text-[10px] text-emerald-700 font-bold uppercase tracking-widest mb-3">NCYU • Certificate of Achievement</p>
+
+          <p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-3">
+            茲證明 <span id="certName" class="font-bold text-emerald-800 border-b-2 border-emerald-600 px-2 text-base">王小明</span> 同學（<span id="certId">1120101</span>）<br>
+            成功完成 <span class="font-bold text-amber-600">「15項核心與體適能自主訓練」</span><br>
+            完成度高達 <span id="certRate" class="font-black text-emerald-700 text-sm">100%</span>，展現優異之自主管理與運動精神！
+          </p>
+
+          <!-- 帶入學生上傳的照片 -->
+          <div class="w-48 h-32 mx-auto border-2 border-emerald-500 rounded-lg overflow-hidden my-3 bg-slate-100 flex items-center justify-center">
+            <img id="certPhoto" class="w-full h-full object-cover hidden">
+            <span id="certPhotoPlaceholder" class="text-[11px] text-slate-400">無現場照片</span>
+          </div>
+
+          <div class="text-[11px] font-semibold text-emerald-800 mt-2">
+            主觀強度：<span id="certRpe">RPE 13</span> | 頒發日期：<span id="certDate">2026/10/20</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作按鈕 -->
+      <div class="mt-4 flex gap-2">
+        <button onclick="downloadCertImage()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-1.5 shadow">
+          <i class="fa-solid fa-download"></i> 下載嘉大專屬獎狀圖檔
+        </button>
+        <button onclick="closeModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-4 py-2.5 rounded-lg text-xs">
+          關閉
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // 已自動填入您的 Google Apps Script Web App URL
+    // 已設定您的 Google Apps Script URL
     const GAS_URL = "https://script.google.com/macros/s/AKfycbw3YCBDlf2SGB93rh2tAA8bfqNhKo67HWBJFwdGLAJQAtOezIoy7ColoxD92VsAMyY/exec";
 
     let selectedPhotoBase64 = "";
     let selectedPhotoName = "";
 
-    // 更新進度條
     function updateProgress() {
       const allCheckboxes = document.querySelectorAll('.set-ck');
-      const total = allCheckboxes.length; // 45
+      const total = allCheckboxes.length;
       let checked = 0;
       allCheckboxes.forEach(ck => { if (ck.checked) checked++; });
 
@@ -414,7 +340,6 @@
       document.getElementById('progressText').innerText = `${checked} / ${total} 組 (${percentage}%)`;
     }
 
-    // 照片上傳與壓縮
     document.getElementById('photoInput').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
@@ -438,7 +363,7 @@
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, height);
 
-            selectedPhotoBase64 = canvas.toDataURL('image/jpeg', 0.5);
+            selectedPhotoBase64 = canvas.toDataURL('image/jpeg', 0.6);
             document.getElementById('photoPreview').src = selectedPhotoBase64;
             document.getElementById('photoPreviewContainer').classList.remove('hidden');
           };
@@ -448,7 +373,6 @@
       }
     });
 
-    // 取得深蹲檢核項目結果
     function getSquatCheckResults() {
       const checks = document.querySelectorAll('.squat-check');
       const labels = ["腳步站姿", "下蹲軌跡", "深度與重心", "軀幹姿態"];
@@ -459,30 +383,48 @@
       return passed.length > 0 ? `深蹲檢核通過: ${passed.join(', ')}` : "深蹲未填寫檢核";
     }
 
-    // 提交表單
     document.getElementById('workoutForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
+      const name = document.getElementById('name').value;
+      const studentId = document.getElementById('studentId').value;
       const allCheckboxes = document.querySelectorAll('.set-ck');
       let checkedCount = 0;
       allCheckboxes.forEach(ck => { if (ck.checked) checkedCount++; });
       const rate = Math.round((checkedCount / 45) * 100);
+      const rpe = document.getElementById('rpeSelect').value;
 
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.innerText = "資料與照片上傳中 (請稍候)...";
+      // 1. 填入獎狀資料
+      document.getElementById('certName').innerText = name;
+      document.getElementById('certId').innerText = studentId;
+      document.getElementById('certRate').innerText = `${rate}%`;
+      document.getElementById('certRpe').innerText = rpe;
+      document.getElementById('certDate').innerText = new Date().toLocaleDateString('zh-TW');
 
+      if (selectedPhotoBase64) {
+        document.getElementById('certPhoto').src = selectedPhotoBase64;
+        document.getElementById('certPhoto').classList.remove('hidden');
+        document.getElementById('certPhotoPlaceholder').classList.add('hidden');
+      } else {
+        document.getElementById('certPhoto').classList.add('hidden');
+        document.getElementById('certPhotoPlaceholder').classList.remove('hidden');
+      }
+
+      // 2. 顯示獎狀 Modal 視窗
+      document.getElementById('certModal').classList.remove('hidden');
+
+      // 3. 背景將資料與照片同步寫入 Google Sheets
       const payload = {
         className: document.getElementById('className').value,
-        studentId: document.getElementById('studentId').value,
-        name: document.getElementById('name').value,
+        studentId: studentId,
+        name: name,
         completedSets: `${checkedCount}/45`,
         completionRate: `${rate}%`,
         squatCheck: getSquatCheckResults(),
-        rpe: document.getElementById('rpeSelect').value,
+        rpe: rpe,
         note: document.getElementById('note').value,
         photoBase64: selectedPhotoBase64,
-        photoName: selectedPhotoName
+        photoName: selectedPhotoName || `${studentId}_photo.jpg`
       };
 
       fetch(GAS_URL, {
@@ -490,24 +432,25 @@
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
-      })
-      .then(() => {
-        alert(`✅ 今日 15 項訓練紀錄已成功同步！完成率: ${rate}%`);
-        selectedPhotoBase64 = "";
-        selectedPhotoName = "";
-        document.getElementById('photoInput').value = "";
-        document.getElementById('photoPreviewContainer').classList.add('hidden');
-        
-        setTimeout(() => { fetchHistory(payload.studentId); }, 1200);
-      })
-      .catch(err => { alert('❌ 上傳發生錯誤: ' + err.message); })
-      .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> 提交今日 15 項訓練紀錄並同步雲端';
+      }).then(() => {
+        setTimeout(() => { fetchHistory(studentId); }, 1200);
       });
     });
 
-    // 載入歷史紀錄
+    function closeModal() {
+      document.getElementById('certModal').classList.add('hidden');
+    }
+
+    function downloadCertImage() {
+      const area = document.getElementById('certificateArea');
+      html2canvas(area, { scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `${document.getElementById('certId').innerText}_嘉大體適能訓練完成證明.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+
     document.getElementById('queryBtn').addEventListener('click', function() {
       const studentId = document.getElementById('studentId').value.trim();
       if (!studentId) {
@@ -527,8 +470,6 @@
     window.handleHistoryResponse = function(data) {
       if (data.result === "success" && data.history) {
         renderHistory(data.history);
-      } else {
-        alert("查無歷史紀錄，或讀取失敗。");
       }
     };
 
